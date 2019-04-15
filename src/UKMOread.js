@@ -7,21 +7,22 @@ const path = require('path');
 //var xml = '<cxml units="deg"><fix number="0">Hello</fix>test<fix number="1">xml2js!</fix></cxml>';
 
 const main = async function(){
-  let fileURI = path.resolve(__dirname,'./xml/z_tigge_c_kwbc_20190213000000_GFS_glob_prod_sttr_glo.xml');
+  let fileURI = path.resolve(__dirname,'./xml/z_tigge_c_egrr_20190315000000_mogreps_glob_prod_etctr_glo.xml');
   const xmlFile = await fs.readFile(fileURI);
   let result = await parseString(xmlFile);
 
-  fs.writeFile(path.resolve(__dirname,'./xml/20190213000000_GFS.json'),JSON.stringify(result,null,2));
+  fs.writeFile(path.resolve(__dirname,'./xml/20190315000000_UKMO.json'),JSON.stringify(result,null,2));
 
   const model = result.cxml.header[0].generatingApplication[0].model[0].name[0];
   const baseTime = result.cxml.header[0].baseTime[0];
   const initTime = moment(baseTime,'YYYY-MM-DDTHH:mm:ssZ').toDate();
   console.log(initTime);
   const allMember = result.cxml.data; //Array
-  const memberList = allMember.map(resolveMember);
+  let filterMenber = allMember.filter(member=>!!member.disturbance);
+  const memberList = filterMenber.map(resolveMember);
   let data = {
     model,
-    ins:'NCEP',
+    ins:'UKMO',
     initTime,
     memberList,
   }
@@ -30,10 +31,10 @@ const main = async function(){
   
   let transferData = combineTC(data);
 
-  await fs.writeFile(__dirname+'/xml/20190213000000_GFS_final.json', JSON.stringify(transferData,null,2));
+  await fs.writeFile(__dirname+'/xml/20190315000000_UKMO_final.json', JSON.stringify(transferData,null,2));
   //return transferData;
   //console.log(JSON.stringify(result,null,2));
-  
+  return transferData;
   //
 }
 
@@ -44,7 +45,8 @@ const main = async function(){
 function resolveMember(member={$:{type:'',member:''}}){
   const fcType = member.$.type//预报类型
   const ensembleNumber = parseInt(member.$.member);
-  const TClist = member.disturbance.map(resolveTC);
+  let disturbance = member.disturbance.filter(tc=>!!tc.cycloneNumber);// 过滤
+  const TClist = disturbance.map(resolveTC);
   const singleMember = {
     fcType,
     ensembleNumber,
@@ -205,7 +207,7 @@ function compareSameTC(main,current){
 
 main()
   .then(data=>{
-    fs.writeFile(path.resolve(__dirname,'./xml/20190213000000_GFS_JSON2.json'),JSON.stringify(data,null,2));
+    // fs.writeFile(path.resolve(__dirname,'./xml/20190315000000_UKMO_JSON2.json'),JSON.stringify(data,null,2));
   })
   .catch(err=>{console.trace(err);
   }

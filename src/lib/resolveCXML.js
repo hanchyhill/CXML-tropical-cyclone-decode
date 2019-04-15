@@ -1,3 +1,4 @@
+// TODO 确定是否去除无名无号台风?
 const {promisify} = require('util');
 const parseString = promisify(require('xml2js').parseString);
 const moment = require('moment');
@@ -39,7 +40,8 @@ function resolveMember(member={$:{type:'',member:''}}){
     return null;
   }
   try{
-    const TClist = member.disturbance.map(resolveTC);
+    // let disturbance = member.disturbance.filter(tc=>!!tc.cycloneNumber);// 去除无名过滤
+    const TClist = disturbance.map(resolveTC);
     const singleMember = {
       fcType,
       ensembleNumber,
