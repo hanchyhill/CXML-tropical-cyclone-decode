@@ -7,8 +7,8 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "GFSread",
-      "program": "${workspaceFolder}/src/GFSread.js"
+      "name": "UKMOread",
+      "program": "${workspaceFolder}/src/UKMOread.js"
     },
     {
       "type": "node",

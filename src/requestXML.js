@@ -125,7 +125,12 @@ async function downloadFromArr(list, model){
 }
 
 async function getDataFromXML({url,filePath,model}){
-  let xml = await downloadXML(url,filePath);
+  let xml;
+  try{
+    xml = await downloadXML(url,filePath)
+  }catch(err){
+    throw err;
+  }
   let transData = await resolveCXML(xml);
   // writeFile(filePath.replace('xml','json'),JSON.stringify(transData,null,2))
   //   .catch(err=>{console.error(err)});
@@ -189,7 +194,8 @@ async function main(){
     console.log('Completed ' + result);
     return awaitNext(5);
   }catch(err){
-    console.log(err);
+    console.error(err);
+    throw err;
   }
 }
 
