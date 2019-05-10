@@ -40,7 +40,7 @@ function resolveMember(member={$:{type:'',member:''}}){
     return null;
   }
   try{
-    // let disturbance = member.disturbance.filter(tc=>!!tc.cycloneNumber);// 去除无名过滤
+    let disturbance = member.disturbance.filter(tc=>!!tc.cycloneNumber);// 去除无名过滤
     const TClist = disturbance.map(resolveTC);
     const singleMember = {
       fcType,

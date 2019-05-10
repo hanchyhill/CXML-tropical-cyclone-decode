@@ -207,6 +207,8 @@ main()
   .then(data=>{
     fs.writeFile(path.resolve(__dirname,'./xml/20190212000000_GEFS_JSON2.json'),JSON.stringify(data,null,2));
   })
-  .catch(err=>{console.trace(err);
+  .catch(err=>{
+    console.trace(err);
+    throw err;
   }
   );
