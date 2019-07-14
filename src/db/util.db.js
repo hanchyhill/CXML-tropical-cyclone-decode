@@ -20,7 +20,8 @@ async function save2DB(fcData={tcID:''}){
         findTC.loc = fcData.loc;
         findTC.fillStatus += 2;
       }else if(fcData.fillStatus==1){
-        findTC.detTrack = fcData.detTrack;
+        //console.log(fcData.tracks);
+        findTC.detTrack = fcData.tracks[0];
         findTC.detLoc = fcData.loc;
         findTC.fillStatus += 1;
       }else{

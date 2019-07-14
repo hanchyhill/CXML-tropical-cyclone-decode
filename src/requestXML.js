@@ -45,11 +45,13 @@ const rqMonthList = async function(dateUrl='https://rda.ucar.edu/data/ds330.3/in
   let options = {
     uri: url_date,
     jar: cookiejar, // Tells rp to include cookies in jar that match uri
+    timeout: 60*1000,
   };
   let body;
   try {
     body = await rp(options);
   } catch (err) {
+    console.error(err);
     throw err;
   }
 
@@ -81,6 +83,8 @@ const rqMonthList = async function(dateUrl='https://rda.ucar.edu/data/ds330.3/in
       await downloadFromArr(listGFS,'GFS');
     }
   }catch(err){
+    console.error('download list error,lin86')
+    console.error(err);
     throw err;
   }
   return 'success '+moment().format('YYYY-MM-DD hh:mm:ss');
@@ -103,7 +107,7 @@ async function downloadFromArr(list, model){
         if(!isFileExists){
           downloadList.push({url:baseUrl+url,filePath:filePath,model:model});
         }else{
-          myDebug(`文件已存在${RegArr[2]}`);
+          // myDebug(`文件已存在${RegArr[2]}`);
           continue;
         }
       }
@@ -118,7 +122,7 @@ async function downloadFromArr(list, model){
       console.log(result);
     }
     catch(err){
-      console.log('pMap发生错误');
+      console.error('pMap发生错误');
       throw err;
     }
   }
@@ -127,18 +131,20 @@ async function downloadFromArr(list, model){
 async function getDataFromXML({url,filePath,model}){
   let xml;
   try{
+    console.log('ready to download '+url);
     xml = await downloadXML(url,filePath)
   }catch(err){
+    console.error('download xml error, line 137')
     throw err;
   }
-  let transData = await resolveCXML(xml);
+  let transData = await resolveCXML(xml).catch(err=>{throw err});
   // writeFile(filePath.replace('xml','json'),JSON.stringify(transData,null,2))
   //   .catch(err=>{console.error(err)});
   console.log(`resolved: ${url.match(/z_tigge.*?xml/)}`);
   for(let tc of transData){
     tc.tcID = `${moment(tc.initTime).format('YYYYMMDDHH')}_${tc.cycloneName}_${tc.cycloneNumber}${tc.basinShort2}_${modelConfig[model].name}`;
     tc.fillStatus = modelConfig[model].modelType;
-    await save2DB(tc);
+    await save2DB(tc).catch(err=>{throw err});
   }
   return url;
 }
@@ -154,6 +160,7 @@ async function downloadXML(url,filePath='../../data/cyclone/necp',model='GEFS') 
   let options = {
     uri: url,
     jar: cookiejar, // Tells rp to include cookies in jar that match uri
+    timeout:60*1000,
   };
   let body;
   try {
@@ -177,7 +184,11 @@ async function initDB(){
   await connect();
   initSchemas();
   save2DB = require('./db/util.db').save2DB;
-  return await main();
+  // return await main();
+  return main().catch(err=>{
+    console.error(err);
+    return awaitNext();
+  });
 }
 
 async function main(){
@@ -209,6 +220,6 @@ function awaitNext(min=5){
 
 initDB()
   .catch(err=>{
-    console.log(err);
+    console.error(err);
     return awaitNext();
   })
