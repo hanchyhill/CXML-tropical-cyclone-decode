@@ -23,7 +23,9 @@ const main = async function(){
   let analysisList = allMember.filter(member=>member.$.type == 'analysis');
   let filterMenber = allMember.filter(member=>!!member.disturbance&&member.$.type != 'analysis');
   // resolveMember(filterMenber[1]);
+  const analysisData = resolveAnalysis(analysisList[0]);
   const memberList = filterMenber.map(resolveMember);
+  
   /* analysisList = analysisList[0].disturbance.map(member=>{
     ID: member.$.ID,
     basin: member.basin[0],
@@ -40,6 +42,8 @@ const main = async function(){
   //console.log(JSON.stringify(data,null,2));
   
   let transferData = combineTC(data);
+  transferData = transferData.filter(tc=>tc.cycloneNumber<70);
+  // transferData = fitECanalysis(transferData, analysisData);
 
   await fs.writeFile(__dirname+'/xml/20190317120000_ecmwf_final.json', JSON.stringify(transferData,null,2));
   //return transferData;
@@ -64,6 +68,39 @@ function resolveMember(member={$:{type:'',member:''}}){
     TClist,
   }
   return singleMember;
+}
+
+function resolveAnalysis(analysis={$:{type:'analysis'}, disturbance:[]}){
+  let disturbance = analysis.disturbance.filter(tc=>!!tc.cycloneNumber&&(!!tc.fix));// 过滤
+  const TClist = disturbance.map(tc=>{
+    const cycloneNumber = tc.cycloneNumber? tc.cycloneNumber[0] : null;
+    const cycloneName = tc.cycloneName? tc.cycloneName[0] : null;
+    const localName = tc.localName? tc.localName[0] : null;
+    const basin = tc.basin[0];
+    const fix = tc.fix[0];
+    let lat,lon;
+    if(fix.latitude[0].$.units.toUpperCase().includes('DEG N')){//是否是北纬
+      lat = Number(fix.latitude[0]._);
+    }else{
+      lat = Number(fix.latitude[0]._ ) * -1;
+    }
+  
+    if(fix.longitude[0].$.units.toUpperCase().includes('DEG E')){//是否是北纬
+      lon = Number(fix.longitude[0]._);
+    }else{
+      lon = Number(fix.longitude[0]._ ) * -1;
+    }
+    return {
+      cycloneNumber,
+      cycloneName,
+      localName,
+      // basinShort3: basin.split(' ').map(str=>str[0]).join(''),
+      basin,
+      loc:[lon, lat],
+      innerID: tc.$.ID,
+    }
+  });
+  return TClist;
 }
 
 /**
@@ -96,10 +133,11 @@ function resolveTC(tc = {}){
     cycloneNumber,
     cycloneName,
     localName,
-    basinShort3: basin.split(' ').map(str=>str[0]).join(''),
+    // basinShort3: basin.split(' ').map(str=>str[0]).join(''),
     basin,
     loc,
     track,
+    innerID: tc.$.ID,
   }
 }
 
@@ -157,10 +195,11 @@ function combineTC(data){
             track:tc.track}
           ],
         };
-        if(tc.basinShort3) newTC.basinShort3 = tc.basinShort3;
+        // if(tc.basinShort3) newTC.basinShort3 = tc.basinShort3;
         if(tc.basin) newTC.basin = tc.basin;
         if(tc.cycloneNumber) newTC.cycloneNumber = tc.cycloneNumber;
         if(tc.cycloneName) newTC.cycloneName = tc.cycloneName;
+        if(tc.innerID) newTC.innerID = tc.innerID;
         final.push(newTC);
       }
     }
@@ -176,12 +215,27 @@ function combineTC(data){
     Object.assign(item,newProps);
     return item;
   });
+  // find detTrack
   for(let tc of mixData){
-    tc.tcID = `${moment(tc.initTime).format('YYYYMMDDHH')}_${tc.cycloneName?tc.cycloneName:tc.cycloneNumber}_${tc.cycloneNumber}${tc.basinShort3}_${tc.model}`;
+    tc.tcID = `${moment(tc.initTime).format('YYYYMMDDHH')}_${tc.cycloneName?tc.cycloneName:tc.cycloneNumber}_${tc.cycloneNumber}${tc.basin.replace(' ','')}_${tc.model}`;
+    let detIndex = tc.tracks.findIndex(t=>t.fcType=='forecast'||t.fcType==0);
+    if(detIndex>-1){
+      tc.detTrack = tc.tracks[detIndex];
+      tc.tracks.splice(detIndex, 1);
+    }
+    
+  };
+  // find controlIndex
+  for(let tc of mixData){
+    tc.tcID = `${moment(tc.initTime).format('YYYYMMDDHH')}_${tc.cycloneName?tc.cycloneName:tc.cycloneNumber}_${tc.cycloneNumber}${tc.basin.replace(' ','')}_${tc.model}`;
     tc.controlIndex = tc.tracks.findIndex(t=>t.ensembleNumber==0);
     tc.fillStatus = 2;
   };
   return mixData;
+}
+
+function fitECanalysis(tcList, analysis){
+  return tcList;
 }
 
 function calTCprops(item={tracks:[{loc:[120,5],track:[[0,[120,5],998,18]]}]}){
@@ -209,8 +263,8 @@ function calTCprops(item={tracks:[{loc:[120,5],track:[[0,[120,5],998,18]]}]}){
 
 //比较是否是相同TC/
 function compareSameTC(main,current){
-  let curID = current.basinShort3 + current.cycloneNumber + current.cycloneName;
-  let mainID = main.basinShort3 + main.cycloneNumber + main.cycloneName;
+  let curID = current.cycloneNumber + current.basin;
+  let mainID = main.cycloneNumber + main.basin;
   if(curID == mainID){
     return true;
   }else{
