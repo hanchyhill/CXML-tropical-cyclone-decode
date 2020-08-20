@@ -40,6 +40,7 @@ const main = async function(fileURI=path.resolve(__dirname,'./xml/z_tigge_c_ecmf
   let analysisList = allMember.filter(member=>member.$.type == 'analysis');
   let filterMenber = allMember.filter(member=>!!member.disturbance&&member.$.type != 'analysis');
   // resolveMember(filterMenber[1]);
+  const analysisData = resolveAnalysis(analysisList[0]);
   const memberList = filterMenber.map(resolveMember);
   try{
     analysisList = analysisList[0].disturbance.map(member=>{
@@ -116,6 +117,39 @@ function resolveMember(member={$:{type:'',member:''}}){
   return singleMember;
 }
 
+function resolveAnalysis(analysis={$:{type:'analysis'}, disturbance:[]}){
+  let disturbance = analysis.disturbance.filter(tc=>!!tc.cycloneNumber&&(!!tc.fix));// 过滤
+  const TClist = disturbance.map(tc=>{
+    const cycloneNumber = tc.cycloneNumber? tc.cycloneNumber[0] : null;
+    const cycloneName = tc.cycloneName? tc.cycloneName[0] : null;
+    const localName = tc.localName? tc.localName[0] : null;
+    const basin = tc.basin[0];
+    const fix = tc.fix[0];
+    let lat,lon;
+    if(fix.latitude[0].$.units.toUpperCase().includes('DEG N')){//是否是北纬
+      lat = Number(fix.latitude[0]._);
+    }else{
+      lat = Number(fix.latitude[0]._ ) * -1;
+    }
+  
+    if(fix.longitude[0].$.units.toUpperCase().includes('DEG E')){//是否是北纬
+      lon = Number(fix.longitude[0]._);
+    }else{
+      lon = Number(fix.longitude[0]._ ) * -1;
+    }
+    return {
+      cycloneNumber,
+      cycloneName,
+      localName,
+      // basinShort3: basin.split(' ').map(str=>str[0]).join(''),
+      basin,
+      loc:[lon, lat],
+      innerID: tc.$.ID,
+    }
+  });
+  return TClist;
+}
+
 /**
  * 
  * @param {Object} tc 第几个扰动
@@ -146,7 +180,7 @@ function resolveTC(tc = {}){
     cycloneNumber,
     cycloneName,
     localName,
-    basinShort3: basin.split(' ').map(str=>str[0]).join(''),
+    // basinShort3: basin.split(' ').map(str=>str[0]).join(''),
     basin,
     loc,
     track,
@@ -223,7 +257,7 @@ function combineTC(data){
             track:tc.track}
           ],
         };
-        if(tc.basinShort3) newTC.basinShort3 = tc.basinShort3;
+        // if(tc.basinShort3) newTC.basinShort3 = tc.basinShort3;
         if(tc.basin) newTC.basin = tc.basin;
         if(tc.cycloneNumber) newTC.cycloneNumber = tc.cycloneNumber;
         if(tc.cycloneName) newTC.cycloneName = tc.cycloneName;
@@ -243,6 +277,17 @@ function combineTC(data){
     Object.assign(item,newProps);
     return item;
   });
+  // find detTrack
+  for(let tc of mixData){
+    tc.tcID = `${moment(tc.initTime).format('YYYYMMDDHH')}_${tc.cycloneName?tc.cycloneName:tc.cycloneNumber}_${tc.cycloneNumber}${tc.basin.replace(' ','')}_${tc.model}`;
+    let detIndex = tc.tracks.findIndex(t=>t.fcType=='forecast'||t.fcType==0);
+    if(detIndex>-1){
+      tc.detTrack = tc.tracks[detIndex];
+      tc.tracks.splice(detIndex, 1);
+    }
+    
+  };
+  // find controlIndex
   for(let tc of mixData){
     let detTrackIndex = tc.tracks.findIndex(t=>t.fcType=='forecast');
     if(detTrackIndex>-1){
@@ -256,6 +301,10 @@ function combineTC(data){
     tc.fillStatus = 2;
   };
   return mixData;
+}
+
+function fitECanalysis(tcList, analysis){
+  return tcList;
 }
 
 function calTCprops(item={tracks:[{loc:[120,5],track:[[0,[120,5],998,18]]}]}){

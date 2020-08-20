@@ -1,0 +1,409 @@
+F:\github\CXML-tropical-cyclone-decode\src>node read_all_cml_file.js > D:\mylog.txt
+异常XML: H:/data/cyclone/ecmwf/2008/20080415/z_tigge_c_ecmf_20080415000000_ifs_glob_test_all_glo.xml
+Error: Unclosed root tag
+Line: 8318
+Column: 64
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090303/z_tigge_c_ecmf_20090303000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 4340
+Column: 50
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090302/z_tigge_c_ecmf_20090302120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 6328
+Column: 37
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090416/z_tigge_c_ecmf_20090416120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 3390
+Column: 31
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+TypeError: Cannot read property 'cxml' of null
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:35:24)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+异常XML: H:/data/cyclone/ecmwf/2009/20090618/z_tigge_c_ecmf_20090618000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 5692
+Column: 7
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090711/z_tigge_c_ecmf_20090711120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 12297
+Column: 1
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090716/z_tigge_c_ecmf_20090716000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 11324
+Column: 9
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090806/z_tigge_c_ecmf_20090806120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 23552
+Column: 9
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090819/z_tigge_c_ecmf_20090819000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 18293
+Column: 5
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090814/z_tigge_c_ecmf_20090814120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 26834
+Column: 26
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090818/z_tigge_c_ecmf_20090818120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 23247
+Column: 23
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090824/z_tigge_c_ecmf_20090824000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 12316
+Column: 59
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090830/z_tigge_c_ecmf_20090830000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 22888
+Column: 52
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2009/20090911/z_tigge_c_ecmf_20090911000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 18274
+Column: 40
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2012/20121008/z_tigge_c_ecmf_20121008120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 16236
+Column: 32
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+TypeError: Cannot read property 'map' of undefined
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:45:48)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+TypeError: Cannot read property 'map' of undefined
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:45:48)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+TypeError: Cannot read property 'map' of undefined
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:45:48)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+TypeError: Cannot read property 'map' of undefined
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:45:48)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+异常XML: H:/data/cyclone/ecmwf/2013/20130224/z_tigge_c_ecmf_20130224000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 17255
+Column: 27
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2013/20130508/z_tigge_c_ecmf_20130508120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 17320
+Column: 12
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2013/20130925/z_tigge_c_ecmf_20130925120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 13617
+Column: 13
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+TypeError: Cannot read property 'map' of undefined
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:45:48)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+TypeError: Cannot read property 'map' of undefined
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:45:48)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+TypeError: Cannot read property 'map' of undefined
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:45:48)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+TypeError: Cannot read property 'map' of undefined
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:45:48)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+TypeError: Cannot read property 'map' of undefined
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:45:48)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+TypeError: Cannot read property 'map' of undefined
+    at main (F:\github\CXML-tropical-cyclone-decode\src\EC_cxml_resolve.js:45:48)
+    at async run (F:\github\CXML-tropical-cyclone-decode\node_modules\p-queue\dist\index.js:159:29)
+异常XML: H:/data/cyclone/ecmwf/2014/20140902/z_tigge_c_ecmf_20140902000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 4395
+Column: 37
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2015/20150716/z_tigge_c_ecmf_20150716120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 1536
+Column: 62
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2015/20151119/z_tigge_c_ecmf_20151119000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 152387
+Column: 2
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2016/20161112/z_tigge_c_ecmf_20161112000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 53481
+Column: 21
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2017/20170906/z_tigge_c_ecmf_20170906120000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 242106
+Column: 59
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2019/20190805/z_tigge_c_ecmf_20190805000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 245447
+Column: 25
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+异常XML: H:/data/cyclone/ecmwf/2020/20200206/z_tigge_c_ecmf_20200206000000_ifs_glob_prod_all_glo.xml
+Error: Unclosed root tag
+Line: 160864
+Column: 22
+Char:
+    at error (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:651:10)
+    at strictFail (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:677:7)
+    at end (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:658:47)
+    at SAXParser.write (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:975:14)
+    at SAXParser.close (F:\github\CXML-tropical-cyclone-decode\node_modules\sax\lib\sax.js:157:38)
+    at Parser.exports.Parser.Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:323:42)
+    at Parser.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:5:59)
+    at exports.parseString (F:\github\CXML-tropical-cyclone-decode\node_modules\xml2js\lib\parser.js:369:19)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)

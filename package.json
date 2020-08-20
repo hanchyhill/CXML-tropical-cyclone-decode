@@ -13,7 +13,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.4.19",
     "p-map": "^2.0.0",
-    "p-queue": "^4.0.0",
+    "p-queue": "^6.6.1",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "tough-cookie": "^3.0.1",

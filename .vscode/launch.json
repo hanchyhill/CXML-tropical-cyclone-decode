@@ -7,6 +7,16 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "EC_read",
+      "program": "${workspaceFolder}/src/EC_cxml_resolve.js",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+  
+    {
+      "type": "node",
+      "request": "launch",
       "name": "UKMOread",
       "program": "${workspaceFolder}/src/UKMOread.js"
     },
