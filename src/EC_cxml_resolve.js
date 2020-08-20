@@ -8,28 +8,66 @@ const moment = require('moment');
 const path = require('path');
 //var xml = '<cxml units="deg"><fix number="0">Hello</fix>test<fix number="1">xml2js!</fix></cxml>';
 
-const main = async function(){
-  let fileURI = path.resolve(__dirname,'./xml/z_tigge_c_ecmf_20190317120000_ifs_glob_prod_all_glo.xml');
-  const xmlFile = await fs.readFile(fileURI);
-  let result = await parseString(xmlFile);
+
+const config = {
+  targetPath: 'H:/data/cyclone/json_format/ecmwf/',//__dirname + '/ecJSON/',
+}
+/**
+ * 解析EC CXML数据
+ * @param {String} fileURI 文件路径
+ */
+const main = async function(fileURI=path.resolve(__dirname,'./xml/z_tigge_c_ecmf_20190317120000_ifs_glob_prod_all_glo.xml')){
+  // let fileURI = path.resolve(__dirname,'./xml/z_tigge_c_ecmf_20190317120000_ifs_glob_prod_all_glo.xml');
+  // console.log(fileURI);
+  const xmlFile = await fs.readFile(fileURI).catch(err=>{
+    console.error('无法打开文件: '+fileURI);
+    fs.appendFile('./ec_resolve_log.txt', '无法打开文件: '+fileURI+'\n');
+    throw err;
+  });
+  let result = await parseString(xmlFile).catch(err=>{
+    console.error('异常XML: '+fileURI);
+    fs.appendFile('./ec_resolve_log.txt', '异常XML: '+fileURI+'\n');
+    throw err;
+  });
 
   // await fs.writeFile(path.resolve(__dirname,'./xml/20190317120000_ecmwf.json'),JSON.stringify(result,null,2));
 
   const model = result.cxml.header[0].productionCenter[0];
   const baseTime = result.cxml.header[0].baseTime[0];
   const initTime = moment(baseTime,'YYYY-MM-DDTHH:mm:ssZ').toDate();
-  console.log(initTime);
+  // console.log(initTime);
   const allMember = result.cxml.data; //Array
   let analysisList = allMember.filter(member=>member.$.type == 'analysis');
   let filterMenber = allMember.filter(member=>!!member.disturbance&&member.$.type != 'analysis');
   // resolveMember(filterMenber[1]);
   const memberList = filterMenber.map(resolveMember);
-  /* analysisList = analysisList[0].disturbance.map(member=>{
-    ID: member.$.ID,
-    basin: member.basin[0],
-    cycloneNumber: member.cycloneNumber[0],
-    loc: member.fix[0],
-  })*/
+  try{
+    analysisList = analysisList[0].disturbance.map(member=>{
+      let lat,lon;
+      let track = member.fix[0];
+      if(track.latitude[0].$.units.toUpperCase().includes('DEG N')){//是否是北纬
+        lat = Number(track.latitude[0]._);
+      }else{
+        lat = Number(track.latitude[0]._ ) * -1;
+      }
+  
+      if(track.longitude[0].$.units.toUpperCase().includes('DEG E')){//是否是北纬
+        lon = Number(track.longitude[0]._);
+      }else{
+        lon = Number(track.longitude[0]._ ) * -1;
+      }
+      return {
+        ID: member.$.ID,
+        basin: member.basin[0],
+        cycloneNumber: member.cycloneNumber?member.cycloneNumber[0]:'0',
+        loc: [lon,lat],
+      }
+    });
+  }catch (e){
+    console.log('数据异常:' + fileURI);
+    fs.appendFile('./ec_resolve_log.txt', '数据异常:' + fileURI +'\n');
+    throw e;
+  }
   let data = {
     model,
     ins:'ecmwf',
@@ -40,10 +78,22 @@ const main = async function(){
   //console.log(JSON.stringify(data,null,2));
   
   let transferData = combineTC(data);
-
-  await fs.writeFile(__dirname+'/xml/20190317120000_ecmwf_final.json', JSON.stringify(transferData,null,2));
-  //return transferData;
-  //console.log(JSON.stringify(result,null,2));
+  transferData = transferData.filter(tc=>Number.parseInt(tc.cycloneNumber)<70);
+  transferData.forEach(tc=>{
+    let basin = tc.basin;
+    let cycloneNumber = tc.cycloneNumber;
+    let innerID = tc.innerID;
+    let theSameTC = analysisList.find(member=>{
+      return basin==member.basin && cycloneNumber == member.cycloneNumber && innerID == member.ID;
+    });
+    if(theSameTC){
+      tc.loc = theSameTC.loc;
+    }
+  });
+  // await fs.writeFile(__dirname+'/xml/20190317120000_ecmwf_final.json', JSON.stringify(transferData,null,2));
+  for(let tc of transferData){
+    fs.writeFile(config.targetPath + tc.tcID + '.json', JSON.stringify(transferData,null,2));
+  }
   return transferData;
   //
 }
@@ -100,6 +150,7 @@ function resolveTC(tc = {}){
     basin,
     loc,
     track,
+    innerID:tc.$.ID,
   }
 }
 
@@ -130,7 +181,20 @@ function resolveTrack(track={}){
   }else{
     wind = Number(cycloneData.maximumWind[0].speed[0]._); // 默认米每秒
   }
-  return [hour,[lon,lat],pressure,wind];
+  let winLon, winLat;
+
+  if(cycloneData.maximumWind[0].latitude[0].$.units.toUpperCase().includes('DEG N')){//是否是北纬
+    winLat = Number(cycloneData.maximumWind[0].latitude[0]._);
+  }else{
+    winLat = Number(cycloneData.maximumWind[0].latitude[0]._ ) * -1;
+  }
+
+  if(cycloneData.maximumWind[0].longitude[0].$.units.toUpperCase().includes('DEG E')){//是否是北纬
+    winLon = Number(cycloneData.maximumWind[0].longitude[0]._);
+  }else{
+    winLon = Number(cycloneData.maximumWind[0].longitude[0]._ ) * -1;
+  }
+  return [hour, [lon, lat], pressure, wind, [winLon, winLat] ];
   //['时效',['经度','纬度'],'气压','风速',['最大风速经度纬度','最大风速经度纬度']
 }
 
@@ -141,6 +205,8 @@ function combineTC(data){
       const found = final.find((ele)=>compareSameTC(ele,tc));
       let newTC;
       if(found){//找到则把路径插入到相同TC中
+        // console.log(found);
+        // console.log(tc);
         newTC = {
           fcType: member.fcType,//预报类型
           ensembleNumber: member.ensembleNumber,//第几个集合预报
@@ -161,6 +227,7 @@ function combineTC(data){
         if(tc.basin) newTC.basin = tc.basin;
         if(tc.cycloneNumber) newTC.cycloneNumber = tc.cycloneNumber;
         if(tc.cycloneName) newTC.cycloneName = tc.cycloneName;
+        if(tc.innerID) newTC.innerID = tc.innerID;
         final.push(newTC);
       }
     }
@@ -177,7 +244,14 @@ function combineTC(data){
     return item;
   });
   for(let tc of mixData){
-    tc.tcID = `${moment(tc.initTime).format('YYYYMMDDHH')}_${tc.cycloneName?tc.cycloneName:tc.cycloneNumber}_${tc.cycloneNumber}${tc.basinShort3}_${tc.model}`;
+    let detTrackIndex = tc.tracks.findIndex(t=>t.fcType=='forecast');
+    if(detTrackIndex>-1){
+      tc.detTrack = tc.tracks[detTrackIndex];
+      tc.tracks.splice(detTrackIndex,1);
+    }
+  };
+  for(let tc of mixData){
+    tc.tcID = `${moment(tc.initTime).format('YYYYMMDDHH')}_${tc.cycloneName?tc.cycloneName:tc.cycloneNumber}_${tc.cycloneNumber}${tc.basin.replace(' ','-')}_${tc.model}`;
     tc.controlIndex = tc.tracks.findIndex(t=>t.ensembleNumber==0);
     tc.fillStatus = 2;
   };
@@ -209,19 +283,23 @@ function calTCprops(item={tracks:[{loc:[120,5],track:[[0,[120,5],998,18]]}]}){
 
 //比较是否是相同TC/
 function compareSameTC(main,current){
-  let curID = current.basinShort3 + current.cycloneNumber + current.cycloneName;
-  let mainID = main.basinShort3 + main.cycloneNumber + main.cycloneName;
+  let curID = current.cycloneNumber + current.basin;
+  let mainID = main.cycloneNumber + main.basin;
+  // console.log(curID, mainID);
   if(curID == mainID){
     return true;
   }else{
     return false;
   }
 }
+if (!module.parent) {
+  main('H:/data/cyclone/ecmwf/2006/20061022/z_tigge_c_ecmf_20061022000000_ifs_glob_test_all_glo.xml')
+    .then(data=>{
+      // fs.writeFile(path.resolve(__dirname,'./xml/20190315000000_UKMO_JSON2.json'),JSON.stringify(data,null,2));
+    })
+    .catch(err=>{console.trace(err);
+    }
+    );
+}
 
-main()
-  .then(data=>{
-    // fs.writeFile(path.resolve(__dirname,'./xml/20190315000000_UKMO_JSON2.json'),JSON.stringify(data,null,2));
-  })
-  .catch(err=>{console.trace(err);
-  }
-  );
+exports.ecCxmlResolve = main;
