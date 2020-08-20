@@ -68,8 +68,22 @@ let insConfig = {
     dir:'msc',
     finalTime: '201001',
   },
+  ecmwf:{
+    base: 'https://rda.ucar.edu/data/ds330.3/index.html?g=4',
+    initTime: '200807',
+    flag:'00_C',
+    dir:'ecmwf',
+    finalTime: '201001',
+  },
+  custom:{
+    base: 'https://rda.ucar.edu/data/ds330.3/index.html?g=4',
+    initTime: '200807',
+    flag:'00_C',
+    dir:'custom',
+    finalTime: '201001',
+  }
 }
-let iConfig = insConfig.msc;
+let iConfig = insConfig.custom;
 let baseUrl = 'https://rda.ucar.edu';
 
 // 代理服务器ip和端口
@@ -150,6 +164,9 @@ async function downloadFromArr(list, model){
         // 2: "z_tigge_c_kwbc_20190306000000_CENS_glob_prod_esttr_glo.xml"
         if(!RegArr) return console.error('匹配URL路径错误:'+url);
         let dirPath = path.resolve(__dirname+`./../../data/cyclone/${iConfig.dir}/`,RegArr[1]);
+        if(model=='custom'){
+          dirPath = path.resolve(__dirname+`./../../data/cyclone/${iConfig.dir}/`);
+        }
         await pMakeDir(dirPath);//创建不存在的目录
         const filePath = path.resolve(dirPath,RegArr[2]);
         let isFileExists = await isExists(filePath);// 判断文件是否存在
@@ -290,7 +307,51 @@ function awaitNext(min=0.1){
 //     return awaitNext();
 //   })
 
-main().catch(err=>{
-       console.error(err);
-       return awaitNext();
-});
+// main().catch(err=>{
+//        console.error(err);
+//        return awaitNext();
+// });
+
+async function customDownload(){
+  let list = [
+    '/data/ds330.3/ecmf/2008/20080415/z_tigge_c_ecmf_20080415000000_ifs_glob_test_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090303/z_tigge_c_ecmf_20090303000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090302/z_tigge_c_ecmf_20090302120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090416/z_tigge_c_ecmf_20090416120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090504/z_tigge_c_ecmf_20090504000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090618/z_tigge_c_ecmf_20090618000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090711/z_tigge_c_ecmf_20090711120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090716/z_tigge_c_ecmf_20090716000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090806/z_tigge_c_ecmf_20090806120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090819/z_tigge_c_ecmf_20090819000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090814/z_tigge_c_ecmf_20090814120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090818/z_tigge_c_ecmf_20090818120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090824/z_tigge_c_ecmf_20090824000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090830/z_tigge_c_ecmf_20090830000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2009/20090911/z_tigge_c_ecmf_20090911000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2012/20121008/z_tigge_c_ecmf_20121008120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20130120/z_tigge_c_ecmf_20130120000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20130209/z_tigge_c_ecmf_20130209120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20130305/z_tigge_c_ecmf_20130305120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20130306/z_tigge_c_ecmf_20130306000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20130224/z_tigge_c_ecmf_20130224000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20130508/z_tigge_c_ecmf_20130508120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20130925/z_tigge_c_ecmf_20130925120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20131214/z_tigge_c_ecmf_20131214120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20131215/z_tigge_c_ecmf_20131215000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20131215/z_tigge_c_ecmf_20131215120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2013/20131216/z_tigge_c_ecmf_20131216000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2014/20140122/z_tigge_c_ecmf_20140122120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2014/20140123/z_tigge_c_ecmf_20140123000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2014/20140902/z_tigge_c_ecmf_20140902000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2015/20150716/z_tigge_c_ecmf_20150716120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2015/20151119/z_tigge_c_ecmf_20151119000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2016/20161112/z_tigge_c_ecmf_20161112000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2017/20170906/z_tigge_c_ecmf_20170906120000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2019/20190805/z_tigge_c_ecmf_20190805000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/ecmf/2020/20200206/z_tigge_c_ecmf_20200206000000_ifs_glob_prod_all_glo.xml',
+  ]
+  downloadFromArr(list,'custom');
+}
+
+customDownload()
