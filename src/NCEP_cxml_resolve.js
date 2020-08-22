@@ -6,8 +6,8 @@ const path = require('path');
 const fs = require('fs').promises;
 
 const config = {
-  targetPath: 'H:/data/cyclone/json_format/ncep/GFS/',//__dirname + '/ecJSON/',
-  logFile: './ncep_resolve_log.txt',
+  targetPath: 'H:/data/cyclone/json_format/ncep/GEFS/',//__dirname + '/ecJSON/',
+  logFile: './ncep_GEF_Sresolve_log.txt',
   demoFile: 'H:/data/cyclone/ncep/2014/20140101/z_tigge_c_kwbc_20140101000000_GEFS_glob_prod_esttr_glo.xml',
   demoFile2: 'H:/data/cyclone/ncep/2014/20140101/z_tigge_c_kwbc_20140101000000_GFS_glob_prod_sttr_glo.xml',
 }
@@ -31,7 +31,7 @@ const main = async function(fileURI=''){
   const model = result.cxml.header[0].generatingApplication[0].model[0].name[0];
   const baseTime = result.cxml.header[0].baseTime[0];
   const initTime = moment(baseTime,'YYYY-MM-DDTHH:mm:ssZ').toDate();
-  console.log(initTime);
+  // console.log(initTime);
   const allMember = result.cxml.data; //Array
   let filterMenber = allMember.filter(member=>!!member.disturbance);
   const memberList = filterMenber.map(resolveMember);// 过滤空数据
