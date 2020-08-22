@@ -75,11 +75,18 @@ let insConfig = {
     dir:'ecmwf',
     finalTime: '201001',
   },
-  custom:{
-    base: 'https://rda.ucar.edu/data/ds330.3/index.html?g=4',
+  ncep:{
+    base: 'https://rda.ucar.edu/data/ds330.3/index.html?g=6',
     initTime: '200807',
     flag:'00_C',
-    dir:'custom',
+    dir:'ncep',
+    finalTime: '201001',
+  },
+  custom:{
+    base: 'https://rda.ucar.edu/data/ds330.3/index.html?g=6',
+    initTime: '200807',
+    flag:'00_C',
+    dir:'custom/msc',
     finalTime: '201001',
   }
 }
@@ -314,13 +321,10 @@ function awaitNext(min=0.1){
 
 async function customDownload(){
   let list = [
-    '/data/ds330.3/ecmf/2013/20130306/z_tigge_c_ecmf_20130306000000_ifs_glob_prod_all_glo.xml',
-    '/data/ds330.3/ecmf/2013/20130925/z_tigge_c_ecmf_20130925120000_ifs_glob_prod_all_glo.xml',
-    '/data/ds330.3/ecmf/2015/20150716/z_tigge_c_ecmf_20150716120000_ifs_glob_prod_all_glo.xml',
-    '/data/ds330.3/ecmf/2015/20151119/z_tigge_c_ecmf_20151119000000_ifs_glob_prod_all_glo.xml',
-    '/data/ds330.3/ecmf/2016/20161112/z_tigge_c_ecmf_20161112000000_ifs_glob_prod_all_glo.xml',
-    '/data/ds330.3/ecmf/2017/20170906/z_tigge_c_ecmf_20170906120000_ifs_glob_prod_all_glo.xml',
-    '/data/ds330.3/ecmf/2019/20190805/z_tigge_c_ecmf_20190805000000_ifs_glob_prod_all_glo.xml',
+    '/data/ds330.3/kwbc/2016/20160218/z_tigge_c_kwbc_20160218000000_CMC_glob_prod_sttr_glo.xml',
+    '/data/ds330.3/kwbc/2020/20200127/z_tigge_c_kwbc_20200127000000_CMC_glob_prod_sttr_glo.xml',
+    '/data/ds330.3/kwbc/2020/20200625/z_tigge_c_kwbc_20200625120000_CMC_glob_prod_sttr_glo.xml',
+    // '/data/ds330.3/ecmf/2013/20130306/z_tigge_c_ecmf_20130306000000_ifs_glob_prod_all_glo.xml',
   ]
   downloadFromArr(list,'custom');
 }
