@@ -93,7 +93,7 @@ const main = async function(fileURI=path.resolve(__dirname,'./xml/z_tigge_c_ecmf
   });
   // await fs.writeFile(__dirname+'/xml/20190317120000_ecmwf_final.json', JSON.stringify(transferData,null,2));
   for(let tc of transferData){
-    fs.writeFile(config.targetPath + tc.tcID + '.json', JSON.stringify(transferData,null,2));
+    fs.writeFile(config.targetPath + tc.tcID + '.json', JSON.stringify(tc,null,2));
   }
   return transferData;
   //
@@ -262,6 +262,7 @@ function combineTC(data){
         if(tc.cycloneNumber) newTC.cycloneNumber = tc.cycloneNumber;
         if(tc.cycloneName) newTC.cycloneName = tc.cycloneName;
         if(tc.innerID) newTC.innerID = tc.innerID;
+        if(tc.basin == 'Northwest Pacific') newTC.basinShort = 'W';
         final.push(newTC);
       }
     }

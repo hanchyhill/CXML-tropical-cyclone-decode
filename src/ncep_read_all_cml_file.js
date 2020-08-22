@@ -1,21 +1,21 @@
 const glob = require('glob');
 const promisify = require('util').promisify;
 const {default: PQueue} = require('p-queue');
-const ecCxmlResolve = require('./EC_cxml_resolve.js').ecCxmlResolve;
+const resolveCXML = require('./NCEP_cxml_resolve.js').resolveCXML;
 const fs = require('fs');
 
 const pGlob = promisify(glob);
 async function readFile(){
-  const basePath = 'H:/data/cyclone/custom/';
+  const basePath = 'H:/data/cyclone/ncep/ncep2014/';
   const globOpt = {
     cwd:basePath,
   };
-  let fileList = await pGlob('**/*.xml', globOpt);
+  let fileList = await pGlob('**/*_GFS_*.xml', globOpt);
 
   // for(let filePath of fileList){
   //    let fileURI = basePath + filePath;
   //    try{
-  //      await ecCxmlResolve(fileURI);
+  //      await resolveCXML(fileURI);
   //    }catch (e){
   //      console.error(fileURI);
   //    }
@@ -31,7 +31,7 @@ async function readFile(){
   });
   for(let filePath of fileList){
     let fileURI = basePath + filePath;
-    queue.add(()=>ecCxmlResolve(fileURI).catch(err=>{
+    queue.add(()=>resolveCXML(fileURI).catch(err=>{
       let info = '异常文件：' + fileURI;
       console.error(err);
       fs.appendFile('./custom_resolve_log.txt',info+err.message+'\n',(error)=>{
