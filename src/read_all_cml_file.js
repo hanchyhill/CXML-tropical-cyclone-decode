@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const pGlob = promisify(glob);
 async function readFile(){
-  const basePath = 'H:/data/cyclone/custom/';
+  const basePath = 'H:/data/cyclone/custom/ecmwf/';
   const globOpt = {
     cwd:basePath,
   };
@@ -34,7 +34,7 @@ async function readFile(){
     queue.add(()=>ecCxmlResolve(fileURI).catch(err=>{
       let info = '异常文件：' + fileURI;
       console.error(err);
-      fs.appendFile('./custom_resolve_log.txt',info+err.message+'\n',(error)=>{
+      fs.appendFile('./custom_resolve_ecmwf_log.txt',info+err.message+'\n',(error)=>{
         console.error(error);
       })
     }));
