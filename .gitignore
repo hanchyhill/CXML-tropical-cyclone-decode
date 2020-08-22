@@ -16,3 +16,4 @@ html/
 xml/
 test/
 *zip
+*log.txt
