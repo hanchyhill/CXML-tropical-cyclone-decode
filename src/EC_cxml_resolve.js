@@ -10,7 +10,7 @@ const path = require('path');
 
 
 const config = {
-  targetPath: 'H:/data/cyclone/json_format/ecmwf/',//__dirname + '/ecJSON/',
+  targetPath: 'H:/data/cyclone/json_format/ecmwf/extra/',//__dirname + '/ecJSON/',
 }
 /**
  * 解析EC CXML数据
@@ -40,7 +40,7 @@ const main = async function(fileURI=path.resolve(__dirname,'./xml/z_tigge_c_ecmf
   let analysisList = allMember.filter(member=>member.$.type == 'analysis');
   let filterMenber = allMember.filter(member=>!!member.disturbance&&member.$.type != 'analysis');
   // resolveMember(filterMenber[1]);
-  const analysisData = resolveAnalysis(analysisList[0]);
+  // const analysisData = resolveAnalysis(analysisList[0]);
   const memberList = filterMenber.map(resolveMember);
   try{
     analysisList = analysisList[0].disturbance.map(member=>{
@@ -79,7 +79,7 @@ const main = async function(fileURI=path.resolve(__dirname,'./xml/z_tigge_c_ecmf
   //console.log(JSON.stringify(data,null,2));
   
   let transferData = combineTC(data);
-  transferData = transferData.filter(tc=>Number.parseInt(tc.cycloneNumber)<70);
+  transferData = transferData.filter(tc=>Number.parseInt(tc.cycloneNumber)<70||Number.parseInt(tc.cycloneNumber)>89);
   transferData.forEach(tc=>{
     let basin = tc.basin;
     let cycloneNumber = tc.cycloneNumber;
@@ -95,7 +95,7 @@ const main = async function(fileURI=path.resolve(__dirname,'./xml/z_tigge_c_ecmf
   for(let tc of transferData){
     fs.writeFile(config.targetPath + tc.tcID + '.json', JSON.stringify(tc,null,2));
   }
-  return transferData;
+  // return transferData;
   //
 }
 
