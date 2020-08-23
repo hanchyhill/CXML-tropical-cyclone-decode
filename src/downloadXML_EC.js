@@ -82,12 +82,21 @@ let insConfig = {
     dir:'ncep',
     finalTime: '201001',
   },
-  custom:{
-    base: 'https://rda.ucar.edu/data/ds330.3/index.html?g=6',
+  ukmo:{
+    base: 'https://rda.ucar.edu/data/ds330.3/index.html?g=5',
     initTime: '200807',
     flag:'00_C',
-    dir:'custom/msc',
+    dir:'ukmo',
     finalTime: '201001',
+    urlInsFlag:'egrr',
+  },
+  custom:{
+    base: 'https://rda.ucar.edu/data/ds330.3/index.html?g=5',
+    initTime: '200807',
+    flag:'00_C',
+    dir:'custom/ukmo',
+    finalTime: '201001',
+    urlInsFlag:'egrr',
   }
 }
 let iConfig = insConfig.custom;
@@ -321,9 +330,19 @@ function awaitNext(min=0.1){
 
 async function customDownload(){
   let list = [
-    '/data/ds330.3/kwbc/2016/20160218/z_tigge_c_kwbc_20160218000000_CMC_glob_prod_sttr_glo.xml',
-    '/data/ds330.3/kwbc/2020/20200127/z_tigge_c_kwbc_20200127000000_CMC_glob_prod_sttr_glo.xml',
-    '/data/ds330.3/kwbc/2020/20200625/z_tigge_c_kwbc_20200625120000_CMC_glob_prod_sttr_glo.xml',
+    '/data/ds330.3/egrr/2011/20111103/z_tigge_c_egrr_20111103120000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2011/20111102/z_tigge_c_egrr_20111102120000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2011/20111104/z_tigge_c_egrr_20111104000000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2012/20121126/z_tigge_c_egrr_20121126120000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2014/20140314/z_tigge_c_egrr_20140314000000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2014/20140331/z_tigge_c_egrr_20140331120000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2014/20140915/z_tigge_c_egrr_20140915120000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2015/20150329/z_tigge_c_egrr_20150329120000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2017/20170731/z_tigge_c_egrr_20170731000000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2018/20180919/z_tigge_c_egrr_20180919000000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2018/20180916/z_tigge_c_egrr_20180916120000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2019/20190516/z_tigge_c_egrr_20190516000000_mogreps_glob_prod_etctr_glo.xml.gz',
+    '/data/ds330.3/egrr/2019/20190517/z_tigge_c_egrr_20190517120000_mogreps_glob_prod_etctr_glo.xml.gz',
     // '/data/ds330.3/ecmf/2013/20130306/z_tigge_c_ecmf_20130306000000_ifs_glob_prod_all_glo.xml',
   ]
   downloadFromArr(list,'custom');
