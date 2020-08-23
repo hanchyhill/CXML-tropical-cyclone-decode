@@ -4,6 +4,25 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+  {
+    "type": "node",
+    "request": "launch",
+    "name": "readAllCXML",
+    "program": "${workspaceFolder}/src/ncep_read_all_cxml_file.js",
+    "cwd": "${workspaceFolder}/src/",
+    "skipFiles": [
+      "<node_internals>/**"
+    ]
+  },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "combine_NCEP",
+      "program": "${workspaceFolder}/src/combine_NCEP.js",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
     {
       "type": "node",
       "request": "launch",
