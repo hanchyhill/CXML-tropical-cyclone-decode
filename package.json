@@ -9,9 +9,12 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "decompress": "^4.2.0",
+    "decompress-gz": "^0.0.1",
+    "decompress-targz": "^4.1.1",
     "glob": "^7.1.3",
     "moment": "^2.24.0",
     "mongoose": "^5.4.19",
+    "node-gzip": "^1.1.2",
     "p-map": "^2.0.0",
     "p-queue": "^6.6.1",
     "request": "^2.88.0",
