@@ -4,24 +4,67 @@ const {promisify} = require('util');
 const parseString = promisify(require('xml2js').parseString);
 const moment = require('moment');
 const path = require('path');
+// const decompress = require('decompress');
+// const decompressGz = require('decompress-gz');
+const {ungzip} = require('node-gzip');
 //var xml = '<cxml units="deg"><fix number="0">Hello</fix>test<fix number="1">xml2js!</fix></cxml>';
 
-const main = async function(){
-  let fileURI = path.resolve(__dirname,'./xml/z_tigge_c_egrr_20190315000000_mogreps_glob_prod_etctr_glo.xml');
-  const xmlFile = await fs.readFile(fileURI);
-  let result = await parseString(xmlFile);
+const config = {
+  targetPath: 'H:/data/cyclone/json_format/ukmo/',//__dirname + '/ecJSON/',
+  logFile: 'F:/github/CXML-tropical-cyclone-decode/src/logs/UKMO_resolve_log.txt',
+  demoFile: "F:/github/CXML-tropical-cyclone-decode/src/xml/z_tigge_c_egrr_20190315000000_mogreps_glob_prod_etctr_glo.xml",
+  demoFile2: "H:/data/cyclone/ukmo/2015/20151103/z_tigge_c_egrr_20151103120000_mogreps_glob_prod_etctr_glo.xml.gz",
+  demoFile3: "H:/data/cyclone/ukmo/2014/20140331/fix.z_tigge_c_egrr_20140331120000_mogreps_glob_prod_etctr_glo.xml.gz",
+}
 
-  fs.writeFile(path.resolve(__dirname,'./xml/20190315000000_UKMO.json'),JSON.stringify(result,null,2));
+let debugConfig = {
+
+};
+
+const main = async function(fileURI){
+  debugConfig.fileURI = fileURI;
+  // let dirPath = path.dirname(fileURI);
+  // console.log(dirPath);
+  const gzXmlFile = await fs.readFile(fileURI).catch(err=>{
+    console.error('无法打开文件: '+fileURI);
+    fs.appendFile(config.logFile, '无法打开文件: '+fileURI+'\n');
+    throw err;
+  });
+  const deCompressFile = await ungzip(gzXmlFile).catch(err=>{
+    console.error('无法解压: '+fileURI);
+    fs.appendFile(config.logFile, '无法解压: '+fileURI+'\n');
+    throw err;
+  });
+  let result = await parseString(deCompressFile).catch(err=>{
+    console.error('异常XML: '+fileURI);
+    fs.appendFile(config.logFile, '异常XML: '+fileURI+'\n');
+    throw err;
+  });
+
+  // fs.writeFile(path.resolve(__dirname,'./xml/20190315000000_UKMO.json'),JSON.stringify(result,null,2));
 
   const model = result.cxml.header[0].generatingApplication[0].model[0].name[0];
+  const numMembers = result.cxml.header[0].generatingApplication[0].ensemble[0].numMembers[0];
   const baseTime = result.cxml.header[0].baseTime[0];
-  const initTime = moment(baseTime,'YYYY-MM-DDTHH:mm:ssZ').toDate();
+  let momentInitTime = moment(baseTime,'YYYY-MM-DDTHH:mm:ssZ');
+  let initTime;
+  if(!momentInitTime.isValid()){
+    // 数据为空时会触发此错误
+    console.error('错误的日期格式: '+fileURI);
+    fs.appendFile(config.logFile, '错误的日期格式: '+fileURI+'\n');
+    timeMatch = fileURI.match(/\d{10}/);
+    initTime = moment(timeMatch[0]+':00:00Z','YYYYMMDDHH:mm:ssZ').toDate();
+    fs.appendFile(config.logFile, '修正为: '+initTime+'\n');
+  }else{
+    initTime = moment(baseTime,'YYYY-MM-DDTHH:mm:ssZ').toDate();
+  }
   console.log(initTime);
   const allMember = result.cxml.data; //Array
   let filterMenber = allMember.filter(member=>!!member.disturbance);
   const memberList = filterMenber.map(resolveMember);
   let data = {
     model,
+    numMembers: parseInt(numMembers),
     ins:'UKMO',
     initTime,
     memberList,
@@ -31,7 +74,12 @@ const main = async function(){
   
   let transferData = combineTC(data);
 
-  await fs.writeFile(__dirname+'/xml/20190315000000_UKMO_final.json', JSON.stringify(transferData,null,2));
+  for(let tc of transferData){
+    if(tc.basinShort2 == 'WP') tc.basinShort = 'W';
+    fs.writeFile(config.targetPath + tc.tcID + '.json', JSON.stringify(tc,null,2));
+  }
+
+  // await fs.writeFile(__dirname+'/xml/20190315000000_UKMO_final.json', JSON.stringify(transferData,null,2));
   //return transferData;
   //console.log(JSON.stringify(result,null,2));
   return transferData;
@@ -46,7 +94,8 @@ function resolveMember(member={$:{type:'',member:''}}){
   const fcType = member.$.type//预报类型
   const ensembleNumber = parseInt(member.$.member);
   let disturbance = member.disturbance.filter(tc=>!!tc.cycloneNumber);// 过滤
-  const TClist = disturbance.map(resolveTC);
+  let TClist = disturbance.map(resolveTC);
+  TClist = TClist.filter(tc=>tc.error!==true);
   const singleMember = {
     fcType,
     ensembleNumber,
@@ -63,23 +112,38 @@ function resolveTC(tc = {}){
   const cycloneNumber = tc.cycloneNumber? tc.cycloneNumber[0] : null;
   const cycloneName = tc.cycloneName? tc.cycloneName[0] : null;
   const localName = tc.localName? tc.localName[0] : null;
+  const localID = tc.localID? tc.localID[0] : null;
   const basinShort2 = tc.basin[0];
-  const track = tc.fix.map(resolveTrack);
-  let tcID = tc.$.ID;
-  let latList = tcID.match(/_(\d+)([S|N])_/); // [ "_254N_", "254N", "N" ]
-  let lonList = tcID.match(/_(\d+)([E|W])$/);
-  let loc = [null,null];
-
-  if(lonList[2] == 'W'){//经度
-    loc[0] = parseInt(lonList[1])/10.0*-1;//西半球乘以-1
-  }else{
-    loc[0] = parseInt(lonList[1])/10.0;//东半球
+  let track;
+  try{
+    track = tc.fix.map(resolveTrack);
+  }catch(err){
+    console.error('解析trak问题: '+debugConfig.fileURI);
+    fs.appendFile(config.logFile, '无法打开文件: '+debugConfig.fileURI+'\n');
+    throw err;
   }
-
-  if(latList[2] == 'S'){//纬度
-    loc[1] = parseInt(latList[1])/10.0*-1;
-  }else{
-    loc[1] = parseInt(latList[1])/10.0;
+  let tcID = tc.$.ID;
+  let latList = tcID.match(/_(\s?\d+)([S|N])_/); // [ "_254N_", "254N", "N" ]
+  let lonList = tcID.match(/_(\s?\d+)([E|W])$/);
+  let loc = [null,null];
+  try{
+    if(lonList[2] == 'W'){//经度
+      loc[0] = parseInt(lonList[1])/10.0*-1;//西半球乘以-1
+    }else{
+      loc[0] = parseInt(lonList[1])/10.0;//东半球
+    }
+  
+    if(latList[2] == 'S'){//纬度
+      loc[1] = parseInt(latList[1])/10.0*-1;
+    }else{
+      loc[1] = parseInt(latList[1])/10.0;
+    }
+  }catch(err){
+    console.log(`无法读取经纬度: ${debugConfig.fileURI} -> ${tcID} ${localID}`);
+    fs.appendFile(config.logFile, `无法读取经纬度: ${debugConfig.fileURI} -> ${tcID} ${localID}\n`);
+    return {
+      error: true,
+    }
   }
   return {
     cycloneNumber,
@@ -87,6 +151,7 @@ function resolveTC(tc = {}){
     localName,
     basinShort2,
     loc,
+    localID,
     track,
   }
 }
@@ -111,13 +176,26 @@ function resolveTrack(track={}){
   }
 
   let cycloneData = track.cycloneData[0];
-  const pressure = Number(cycloneData.minimumPressure[0].pressure[0]._);
-  let wind;
-  if(cycloneData.maximumWind[0].speed[0].$.units.toUpperCase().includes('KT')){
-    wind = Number(cycloneData.maximumWind[0].speed[0]._) * 0.51444; // 节
+  // TODO 没有强度信息，值为 -9999; 
+  let pressure;
+  if(cycloneData.hasOwnProperty('minimumPressure')){
+    pressure = Number(cycloneData.minimumPressure[0].pressure[0]._);
   }else{
-    wind = Number(cycloneData.maximumWind[0].speed[0]._); // 默认米每秒
+    pressure = -9999.99;
   }
+
+  let wind;
+  if(cycloneData.hasOwnProperty('maximumWind')){
+    if(cycloneData.maximumWind[0].speed[0].$.units.toUpperCase().includes('KT')){
+      wind = Number(cycloneData.maximumWind[0].speed[0]._) * 0.51444; // 节
+    }else{
+      wind = Number(cycloneData.maximumWind[0].speed[0]._); // 默认米每秒
+    }
+  }else{
+    pressure = -9999.99;
+  }
+
+  
   return [hour,[lon,lat],pressure,wind];
   //['时效',['经度','纬度'],'气压','风速',['最大风速经度纬度','最大风速经度纬度']
 }
@@ -148,6 +226,7 @@ function combineTC(data){
         if(tc.basinShort2) newTC.basinShort2 = tc.basinShort2;
         if(tc.cycloneNumber) newTC.cycloneNumber = tc.cycloneNumber;
         if(tc.cycloneName) newTC.cycloneName = tc.cycloneName;
+        if(tc.localID) newTC.localID = tc.localID;
         final.push(newTC);
       }
     }
@@ -157,6 +236,7 @@ function combineTC(data){
   mixData = mixData.map(item=>{
     // 经纬度靠ID读取
     item.ins = data.ins;
+    item.numMembers = data.numMembers;
     item.model = data.model;
     item.initTime = data.initTime;
     let newProps = calTCprops(item);
@@ -205,10 +285,16 @@ function compareSameTC(main,current){
   }
 }
 
-main()
-  .then(data=>{
-    // fs.writeFile(path.resolve(__dirname,'./xml/20190315000000_UKMO_JSON2.json'),JSON.stringify(data,null,2));
-  })
-  .catch(err=>{console.trace(err);
-  }
-  );
+if (!module.parent) {
+  main(config.demoFile3)
+    .then(data=>{
+      // fs.writeFile(path.resolve(__dirname,'./xml/20190315000000_UKMO_JSON2.json'),JSON.stringify(data,null,2));
+    })
+    .catch(err=>{console.trace(err);
+    }
+    );
+}
+
+module.exports = {
+  resolveCXML:main,
+};
