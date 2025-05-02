@@ -10,7 +10,8 @@ const path = require('path');
 
 
 const config = {
-  targetPath: 'H:/data/cyclone/json_format/ecmwf/extra/',//__dirname + '/ecJSON/',
+  targetPath: 'H:/data/cyclone/json_format/ecmwf/new_cxml/',//__dirname + '/ecJSON/',
+  // targetPath: 'H:/data/cyclone/json_format/ecmwf/extra/',//__dirname + '/ecJSON/',
 }
 /**
  * 解析EC CXML数据

@@ -70,10 +70,10 @@ let insConfig = {
   },
   ecmwf:{
     base: 'https://rda.ucar.edu/data/ds330.3/index.html?g=4',
-    initTime: '200807',
-    flag:'00_C',
+    initTime: '202006',//'200807',
+    flag:'_ecmf_',
     dir:'ecmwf',
-    finalTime: '201001',
+    finalTime: '202204',// '201001',
   },
   ncep:{
     base: 'https://rda.ucar.edu/data/ds330.3/index.html?g=6',
@@ -99,7 +99,7 @@ let insConfig = {
     urlInsFlag:'egrr',
   }
 }
-let iConfig = insConfig.custom;
+let iConfig = insConfig.ecmwf;
 let baseUrl = 'https://rda.ucar.edu';
 
 // 代理服务器ip和端口
@@ -323,29 +323,29 @@ function awaitNext(min=0.1){
 //     return awaitNext();
 //   })
 
-// main().catch(err=>{
-//        console.error(err);
-//        return awaitNext();
-// });
+main().catch(err=>{
+       console.error(err);
+       return awaitNext();
+});
 
-async function customDownload(){
-  let list = [
-    '/data/ds330.3/egrr/2011/20111103/z_tigge_c_egrr_20111103120000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2011/20111102/z_tigge_c_egrr_20111102120000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2011/20111104/z_tigge_c_egrr_20111104000000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2012/20121126/z_tigge_c_egrr_20121126120000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2014/20140314/z_tigge_c_egrr_20140314000000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2014/20140331/z_tigge_c_egrr_20140331120000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2014/20140915/z_tigge_c_egrr_20140915120000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2015/20150329/z_tigge_c_egrr_20150329120000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2017/20170731/z_tigge_c_egrr_20170731000000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2018/20180919/z_tigge_c_egrr_20180919000000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2018/20180916/z_tigge_c_egrr_20180916120000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2019/20190516/z_tigge_c_egrr_20190516000000_mogreps_glob_prod_etctr_glo.xml.gz',
-    '/data/ds330.3/egrr/2019/20190517/z_tigge_c_egrr_20190517120000_mogreps_glob_prod_etctr_glo.xml.gz',
-    // '/data/ds330.3/ecmf/2013/20130306/z_tigge_c_ecmf_20130306000000_ifs_glob_prod_all_glo.xml',
-  ]
-  downloadFromArr(list,'custom');
-}
+// async function customDownload(){
+//   let list = [
+//     '/data/ds330.3/egrr/2011/20111103/z_tigge_c_egrr_20111103120000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2011/20111102/z_tigge_c_egrr_20111102120000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2011/20111104/z_tigge_c_egrr_20111104000000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2012/20121126/z_tigge_c_egrr_20121126120000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2014/20140314/z_tigge_c_egrr_20140314000000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2014/20140331/z_tigge_c_egrr_20140331120000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2014/20140915/z_tigge_c_egrr_20140915120000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2015/20150329/z_tigge_c_egrr_20150329120000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2017/20170731/z_tigge_c_egrr_20170731000000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2018/20180919/z_tigge_c_egrr_20180919000000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2018/20180916/z_tigge_c_egrr_20180916120000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2019/20190516/z_tigge_c_egrr_20190516000000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     '/data/ds330.3/egrr/2019/20190517/z_tigge_c_egrr_20190517120000_mogreps_glob_prod_etctr_glo.xml.gz',
+//     // '/data/ds330.3/ecmf/2013/20130306/z_tigge_c_ecmf_20130306000000_ifs_glob_prod_all_glo.xml',
+//   ]
+//   downloadFromArr(list,'custom');
+// }
 
-customDownload()
+// customDownload()
