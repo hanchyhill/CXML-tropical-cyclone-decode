@@ -203,7 +203,8 @@ async function downloadXML(url,filePath='../../data/cyclone/necp',model='GEFS') 
 async function main(){
   // let nowMonth = moment().format('YYMM');
   // let preMonth = moment().subtract(1,'months').format('YYMM');
-  let ncepBase = 'https://rda.ucar.edu/data/ds330.3/index.html?g=6';
+  // let ncepBase = 'https://rda.ucar.edu/data/ds330.3/index.html?g=6';
+  let ncepBase = 'https://gdex.ucar.edu/datasets/d330003/filelist/6';
   // let ukomBase = 'https://rda.ucar.edu/data/ds330.3/index.html?g=5';
   // console.log(nowMonth,preMonth);
   let result;

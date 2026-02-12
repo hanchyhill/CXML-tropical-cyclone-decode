@@ -11,6 +11,9 @@ from tqdm import tqdm as std_tqdm
 # 设置下载目录
 ins = "ecmwf"
 DOWNLOAD_DIR = r"H:\data\cyclone\cxml_new\{}".format(ins)
+# 设置 Windows 环境变量 http 和 https 代理
+os.environ['http_proxy'] = 'http://127.0.0.1:10809'
+os.environ['https_proxy'] = 'http://127.0.0.1:10809'
 
 # 确保下载目录存在
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
@@ -60,7 +63,7 @@ async def download_file(session: ClientSession, url: str, semaphore: Semaphore, 
 
 async def main():
     # 创建信号量来限制并发数
-    semaphore = Semaphore(10)
+    semaphore = Semaphore(5)
     
     # 创建总体进度条
     with tqdm(total=len(filelist), desc="Total Progress", unit="files") as pbar:

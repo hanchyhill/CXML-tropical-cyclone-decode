@@ -2,6 +2,10 @@
 
 下载/解析 CXML 格式集合预报模式台风数据
 
+## 下载数据
+
+[2026年最新下载文件](src/new_download/download_cxml_new.js)
+
 # 配置文件
 
 RDA UCAR/NCAR 的账号信息需要自行配置
